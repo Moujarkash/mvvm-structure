@@ -1,7 +1,7 @@
 package com.project.mod.posts.network
 
-import android.database.Observable
 import com.project.mod.posts.model.Post
+import io.reactivex.Observable
 import retrofit2.http.GET
 
 
