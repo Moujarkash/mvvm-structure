@@ -1,5 +1,6 @@
 package com.project.mod.posts.ui.post
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -14,7 +15,7 @@ class PostListAdapter: RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostListAdapter.ViewHolder {
         val binding: ItemPostBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_post, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(parent.context, binding)
     }
 
     override fun onBindViewHolder(holder: PostListAdapter.ViewHolder, position: Int) {
@@ -30,8 +31,8 @@ class PostListAdapter: RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class ViewHolder(private val binding: ItemPostBinding):RecyclerView.ViewHolder(binding.root){
-        private val viewModel = PostViewModel()
+    class ViewHolder(private val context: Context, private val binding: ItemPostBinding):RecyclerView.ViewHolder(binding.root){
+        private val viewModel = PostViewModel(context)
 
         fun bind(post:Post){
             viewModel.bind(post)

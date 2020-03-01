@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.project.mod.posts.R
@@ -15,7 +15,7 @@ import com.project.mod.posts.injection.ViewModelFactory
 
 class PostListActivity: AppCompatActivity() {
 
-    private var errorSnackbar: Snackbar? = null
+    private var errorSnackBar: Snackbar? = null
 
     private lateinit var binding: ActivityPostListBinding
     private lateinit var viewModel: PostListViewModel
@@ -26,7 +26,7 @@ class PostListActivity: AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_post_list)
         binding.postList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(PostListViewModel::class.java)
+        viewModel = ViewModelProvider(this, ViewModelFactory(this)).get(PostListViewModel::class.java)
         viewModel.errorMessage.observe(this, Observer {
                 errorMessage -> if(errorMessage != null) showError(errorMessage) else hideError()
         })
@@ -34,12 +34,12 @@ class PostListActivity: AppCompatActivity() {
     }
 
     private fun showError(@StringRes errorMessage: Int){
-        errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
-        errorSnackbar?.setAction(R.string.retry, viewModel.errorClickListener)
-        errorSnackbar?.show()
+        errorSnackBar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
+        errorSnackBar?.setAction(R.string.retry, viewModel.errorClickListener)
+        errorSnackBar?.show()
     }
 
     private fun hideError(){
-        errorSnackbar?.dismiss()
+        errorSnackBar?.dismiss()
     }
 }

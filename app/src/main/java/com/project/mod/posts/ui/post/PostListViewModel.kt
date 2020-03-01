@@ -1,5 +1,6 @@
 package com.project.mod.posts.ui.post
 
+import android.content.Context
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -15,10 +16,14 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class PostListViewModel(private val postDao: PostDao): BaseViewModel() {
+class PostListViewModel(private val context: Context): BaseViewModel(context) {
 
     @Inject
     lateinit var postApi: PostApi
+
+    @Inject
+    lateinit var postDao: PostDao
+
     private lateinit var subscription: Disposable
 
     val postListAdapter: PostListAdapter = PostListAdapter()
@@ -36,6 +41,7 @@ class PostListViewModel(private val postDao: PostDao): BaseViewModel() {
     }
 
     private fun loadPosts(){
+
         subscription = Observable.fromCallable { postDao.all }
             .concatMap {
                     dbPostList ->

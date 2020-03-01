@@ -1,12 +1,13 @@
 package com.project.mod.posts.injection.component
 
+import com.project.mod.posts.injection.module.DatabaseModule
 import com.project.mod.posts.injection.module.NetworkModule
 import com.project.mod.posts.ui.post.PostListViewModel
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [(NetworkModule::class)])
+@Component(modules = [(NetworkModule::class), (DatabaseModule::class)])
 interface ViewModelInjector {
 
     fun inject(postListViewModel: PostListViewModel)
@@ -16,5 +17,7 @@ interface ViewModelInjector {
         fun build(): ViewModelInjector
 
         fun networkModule(networkModule: NetworkModule): Builder
+
+        fun databaseModule(databaseModule: DatabaseModule): Builder
     }
 }
